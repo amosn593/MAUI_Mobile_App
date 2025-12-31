@@ -1,0 +1,40 @@
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DemoApp.Pages.SelectCustomerPage"
+             xmlns:vm="clr-namespace:DemoApp.ViewModels"
+             xmlns:models="clr-namespace:DemoApp.Models"
+             x:DataType="vm:SelectCustomerViewModel"
+             Title="SelectCustomerPage">
+    
+    <VerticalStackLayout Padding="20">
+
+        <SearchBar Text="{Binding SearchText}"
+                   SearchCommand="{Binding SearchCommand}" />
+
+        <ActivityIndicator IsRunning="{Binding IsSearching}"
+                   IsVisible="{Binding IsSearching}" />
+
+        <!--<CollectionView ItemsSource="{Binding Customers}"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectCommand}"
+                        SelectionChangedCommandParameter="{Binding CurrentSelection[0], Source={RelativeSource Self}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding Name}" FontSize="18"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+
+        <CollectionView ItemsSource="{Binding Customers}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Customer">
+                    <Label Text="{Binding Name}" FontSize="18" TextColor="Red"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

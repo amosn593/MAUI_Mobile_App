@@ -29,9 +29,12 @@ namespace DemoApp
             });
 
             builder.Services.AddSingleton<IProductService, ProductService>();
+            builder.Services.AddSingleton<ICustomerService, CustomerService>();
 
             builder.Services.AddTransient<CreateOrderPage>();
             builder.Services.AddTransient<CreateOrderViewModel>();
+            builder.Services.AddTransient<SelectCustomerPage>();
+            builder.Services.AddTransient<SelectCustomerViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

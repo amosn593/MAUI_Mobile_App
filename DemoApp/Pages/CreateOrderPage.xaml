@@ -8,10 +8,6 @@
 
     <VerticalStackLayout Padding="20" Spacing="12">
 
-        <Label Text="Create Order"
-               FontSize="24"
-               FontAttributes="Bold" />
-
         <!-- Search -->
         <SearchBar Placeholder="Search product..."
                    Text="{Binding SearchText}"
@@ -19,6 +15,9 @@
 
         <ActivityIndicator IsRunning="{Binding IsSearching}"
                            IsVisible="{Binding IsSearching}" />
+
+        <Button Text="{Binding Customer.Name, FallbackValue='Select Customer'}"
+                Command="{Binding SelectCustomerCommand}" />
 
         <!-- Multiple Results -->
         <!--<CollectionView ItemsSource="{Binding Products}"
@@ -48,46 +47,38 @@
                     ItemsSource="{Binding OrderDetails}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:OrderDetail">
-                        <Grid ColumnDefinitions="*,40,50,40,60"
+                        <Grid ColumnDefinitions="*,70,40,50,40,60, 40"
                       Padding="6">
 
                             <Label Text="{Binding ProductName}" />
+                            
+                            <Entry Grid.Column="1"
+                                   Text="{Binding UnitPrice, Mode=TwoWay}"
+                                   Keyboard="Numeric"
+                                   HorizontalTextAlignment="Center" />
 
-                            <Button Grid.Column="1" Text="➖" BackgroundColor="DarkBlue" TextColor="White" Command="{Binding DecreaseCommand}" />
+                            <Button Grid.Column="2" Text="-" BackgroundColor="Yellow"    
+                                TextColor="White"  Command="{Binding DecreaseCommand}" />
 
-                            <!--<Button Grid.Column="1"
-                            Text="➖"
-                            TextColor="DarkBlue"
-                            Command="{Binding Source={RelativeSource AncestorType=ContentPage},
-                                              Path=BindingContext.DecreaseQuantityCommand}"
-                            CommandParameter="{Binding}" />-->
-
-                            <Entry Grid.Column="2"
-                              Text="{Binding Quantity}"
+                            
+                            <Entry Grid.Column="3"
+                              Text="{Binding Quantity, Mode=TwoWay}"
                               Keyboard="Numeric"/>
 
-                            <Button Grid.Column="3" Text="➕" BackgroundColor="Green" TextColor="White" Command="{Binding IncreaseCommand}" />
-                            <Button Grid.Column="4" Text="🗑" BackgroundColor="Red" TextColor="White" Command="{Binding RemoveCommand}" />
+                            <Button Grid.Column="4" Text="+" BackgroundColor="Blue"
+                                TextColor="White"  Command="{Binding IncreaseCommand}" />
 
-                            <!--<Button Grid.Column="3"
-                            Text="➕"
-                            TextColor="Green"
-                            Command="{Binding Source={RelativeSource AncestorType=ContentPage},
-                                              Path=BindingContext.IncreaseQuantityCommand}"
-                            CommandParameter="{Binding}" />
+                            <Label Grid.Column="5"
+                               Text="{Binding SubTotal, StringFormat='{}{0:C}'}"
+                               HorizontalTextAlignment="End"/>
 
-                            <Button Grid.Column="4"
-                            Text="🗑"
-                            TextColor="Red"
-                            Command="{Binding Source={RelativeSource AncestorType=ContentPage},
-                                              Path=BindingContext.RemoveItemCommand}"
-                            CommandParameter="{Binding}" />-->
+                            <Button Grid.Column="6" BackgroundColor="Red" Text="X"
+                                TextColor="White"  Command="{Binding RemoveCommand}" />
+
+                           
                         </Grid>
                     </DataTemplate>
-                    <!--<DataTemplate x:DataType="models:OrderDetail">
-                        <Label Text="{Binding ProductName, FallbackValue='NO NAME'}"
-                                BackgroundColor="LightYellow"/>
-                    </DataTemplate>-->
+                   
                 </CollectionView.ItemTemplate>
             </CollectionView>
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DemoApp.ViewModels;
+﻿
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,6 +7,9 @@ using DemoApp.Pages;
 using DemoApp.Services;
 using System.Collections.ObjectModel;
 
+namespace DemoApp.ViewModels;
+
+[QueryProperty(nameof(Customer), nameof(Customer))]
 public partial class CreateOrderViewModel : ObservableObject
 {
     private readonly IProductService _productService;
@@ -34,6 +33,9 @@ public partial class CreateOrderViewModel : ObservableObject
 
     [ObservableProperty]
     private ProductDto? selectedProduct;
+
+    [ObservableProperty]
+    private Customer? customer;
 
     //[ObservableProperty]
     //private int quantity = 1;
@@ -92,11 +94,11 @@ public partial class CreateOrderViewModel : ObservableObject
             OrderDetails.Add(item);
 
             // Recalculate total when quantity changes
-            item.PropertyChanged += (_, e) =>
-            {
-                if (e.PropertyName == nameof(OrderDetail.Quantity))
-                    OnPropertyChanged(nameof(TotalAmount));
-            };
+            //item.PropertyChanged += (_, e) =>
+            //{
+            //    if (e.PropertyName == nameof(OrderDetail.Quantity))
+            //        OnPropertyChanged(nameof(TotalAmount));
+            //};
 
             
         }
@@ -164,6 +166,12 @@ public partial class CreateOrderViewModel : ObservableObject
 
         OrderDetails.Clear();
         OnPropertyChanged(nameof(TotalAmount));
+    }
+
+    [RelayCommand]
+    private async Task SelectCustomer()
+    {
+        await Shell.Current.GoToAsync(nameof(SelectCustomerPage));
     }
 }
 

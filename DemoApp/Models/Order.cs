@@ -10,6 +10,7 @@ public class Order
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime OrderDate { get; set; } = DateTime.Now;
+    public Customer? Customer { get; set; }
     public List<OrderDetail> Details { get; set; } = new();
     public decimal TotalAmount => Details.Sum(d => d.SubTotal);
 }
@@ -18,11 +19,15 @@ public partial class OrderDetail : ObservableObject
 {
     public int ProductId { get; set; }
     public string ProductName { get; set; } = string.Empty;
-    public decimal UnitPrice { get; set; }
+
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SubTotal))]
-    private int quantity;
+    private decimal unitPrice;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SubTotal))]
+    private int quantity = 1;
 
     public decimal SubTotal => Quantity * UnitPrice;
 

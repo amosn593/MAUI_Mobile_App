@@ -8,6 +8,7 @@ namespace DemoApp
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(CreateOrderPage), typeof(CreateOrderPage));
+            Routing.RegisterRoute(nameof(SelectCustomerPage), typeof(SelectCustomerPage));
         }
     }
 }
